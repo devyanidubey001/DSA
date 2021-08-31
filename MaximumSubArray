@@ -1,0 +1,66 @@
+def findmaxCrossSum(array, low, mid, high):
+    sums = 0
+    leftSum = -10000
+    
+#For finding maximum sum sub array in the left of the array
+
+    for i in range(mid, low-1, -1):
+         sums = sums + array[i]
+
+         if (sums > leftSum):
+           leftSum = sums
+
+#For finding maximum sum sub array in the right of the array
+
+    sums = 0
+    rightSum = -1000
+    for i in range(mid + 1, high + 1):
+        sums = sums + array[i]
+
+        if (sums > rightSum):
+            rightSum = sums
+
+
+    return max(leftSum + rightSum, leftSum, rightSum)
+
+
+
+def maxSubarraySum(array, low, high):
+
+#For the base condition i.e if there is only one element in the array
+   if (low == high):
+     return array[low]
+
+#Calculating the mid point
+   mid = (low + high) // 2
+
+
+   return max(maxSubarraySum(array, low, mid),
+            maxSubarraySum(array, mid+1, high),
+            findmaxCrossSum(array, low, mid, high))
+            
+            
+#Difference between actual runtime and calculated time
+import numpy as np
+import matplotlib.pyplot as plt
+import time
+
+element = []
+timing=[]
+array = np.random.randint(-100,100,100000)
+for i in range(0,len(array)):
+    startingTime= time.time()
+    max_value = maxSubarraySum(array,0,len(array)-1)
+    time = time.time() - startingTime
+    timing.append(time)
+fig = plt.figure(figsize=(10,5))
+plt.plot(element,timing,label = 'actual time')
+
+c= 1/500000
+
+y1= c*(element*(np.log(element)))
+
+plt.plot(element,y1,label = 'calculated time')
+plt.xscale("log", base=10)
+plt.yscale('Time spent by the algoritm')
+
