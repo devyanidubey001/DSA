@@ -1,0 +1,111 @@
+#HEAPSORT
+
+#Getting Parent
+def getParent(i):
+    parentNode = (i-1)//2
+    if parentNode >= 0:
+        return parentNode
+    else:
+        return None
+
+
+#Getting left child 
+def getLeftChild(i, arr):
+    left = 2*i 
+    if left < len(arr):
+        return left
+    else:
+        return None
+
+#Getting Right child
+def getRightChild(i, arr):
+    right = 2*i + 1
+    if right < len(arr):
+        return right
+    else:
+        return None
+
+
+def maxHeapify(A, i, heapsize):
+    largest = i
+    left = getLeftChild(i, A)
+    if left is not None and left < heapsize and A[left] > A[i]:
+        largest = left
+
+    right = getRightChild(i, A)
+    if right is not None and right < heapsize and A[right] > A[largest]:
+        largest = right
+
+    if largest is not i:
+        x = A[i]
+        A[i] = A[largest]
+        A[largest] = x
+        maxHeapify(A, largest, heapsize)
+
+
+# for every node which is not leaf node
+# adjust it to a max heap
+def buildMaxHeap(A):
+    for i in range(len(A)//2):
+        maxHeapify(A, i, len(A))
+
+
+# final function for heapsort
+def heapSort(A):
+    #Making A to be a max heap so passing through buildMaxHeap function
+    buildMaxHeap(A)
+    heapsize = len(A)
+
+    # find max element for every step
+    for i in range(len(A) - 1, 0, -1):
+        tmp = A[0]
+        A[0] = A[i]
+        A[i] = tmp
+        heapsize = heapsize - 1
+        maxHeapify(A, 0, heapsize)
+A = [16, 4, 10, 14, 7, 9, 3, 2, 8, 1]
+heapSort(A)
+print(A)
+
+
+
+
+#QUICK SORT
+
+#Quick Sort
+
+
+def exchange(A, i, j):
+    tmp = A[i]
+    A[i] = A[j]
+    A[j] = tmp
+
+def partition(A, p, r):
+    x = A[r]
+    i = p - 1
+
+    for end in range(p, r):
+        if A[end] <= x:
+            i += 1
+            exchange(A, i, end)
+
+    exchange(A, i + 1, r)
+    return i + 1
+
+def _quicksort(A, p, r):
+    if p >= r: return
+    q = partition(A, p, r)
+    _quicksort(A, p, q - 1)
+    _quicksort(A, q+ 1, r)
+
+def quicksort(A):
+    _quicksort(A, 0, len(A)-1)
+    return A
+
+    
+#Test
+A = [15, 13, 9, 5, 12, 8, 7, 4, 0, 6, 2, 1]
+quicksort(A)
+print(A)
+
+
