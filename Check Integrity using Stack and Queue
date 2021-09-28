@@ -1,0 +1,70 @@
+ob = ["[", "{", "("]
+ob1 = ["]", "}", ")"]
+
+#Stack 
+
+def push(s,i):
+    s.append(i)   
+def pop(s,i):
+    top = len(s)
+    idx = ob1.index(i)
+    if len(s) > 0 and s[top-1] == ob[idx]:
+        s.pop(top-1)
+    else:
+        print("underflow")
+        
+def checkingIntegrity(string):
+  s = []
+  for i in string:
+      if i in ob:
+         push(s,i)
+      else:
+        if i in ob1:
+         pop(s,i)
+  if len(s) > 0:
+    print("not okay")
+  if len(s) == 0:
+    print("okay")
+    
+string = "[{}"
+checkingIntegrity(string)
+
+
+#queue
+
+ob = ["[", "{", "("]
+ob1 = ["]", "}", ")"]
+
+
+def enqueue(array, ele):
+    array.append(ele)
+    
+def dequeue(array,ele,head):
+    idx = ob1.index(ele)
+    tail = len(array)-1
+    if tail != head and array[tail] == ob[idx]:
+        array.pop(tail)
+    
+def checkingIntegrity(string):
+  
+  array = []
+  head = -1
+  tail = -1
+   
+  for i in string:
+      if i in ob:
+         enqueue(array,i)
+         tail = tail + 1
+         
+      else:
+        if i in ob1:
+         dequeue(array,i,head)
+         head = head + 1
+  if tail == head:
+    print("okay")
+  else:
+    print("not okay")
+
+string = "{[[]]{()}"
+checkingIntegrity(string)
+    
