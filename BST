@@ -1,0 +1,61 @@
+
+class Node:
+
+     def __init__(self, key):
+        self.v = key
+        self.l = None
+        self.r = None
+  
+def inOrderSuccessor(n):
+      
+    if x.r is not None:
+        return minValue(x.r)
+  
+    y = x.p
+    while( y is not None):
+        if x != y.r :
+            break 
+        x = y
+        y = y.p
+    return y
+def minValue(node):
+    x = node
+  
+    while(x is not None):
+        if x.l is None:
+            break
+        x = x.l
+  
+    return x
+def insert( node, v):
+  
+    if node is None:
+        return Node(v)
+    else:
+         
+        if v <= node.v:
+            temp = insert(node.l, v)
+            node.l = temp 
+            temp.parent = node
+        else:
+            temp = insert(node.r, v)
+            node.r = temp 
+            temp.parent = node
+          
+        return node
+  
+  
+
+
+
+
+root = None
+
+root = insert(root, 20)
+root = insert(root, 8)
+root = insert(root, 22)
+root = insert(root, 4);
+root = insert(root, 12)
+root = insert(root, 10)
+root = insert(root, 14)
+temp = root.l.r.r
